@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        body::before {  
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #B8CBC9;
+            z-index: 555;
+        }
+        body::after {  
+            content: "Powered by IT department. If there are any problems, please contact us";
+            position: fixed;
+            bottom: 0;
+            left: 0px;
+            width: 100%;
+            height: 20px;
+            background-color: #F9F9F6;
+            padding: 5px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #333;
+            z-index: 555;
+        }
+
+        .logout {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            z-index:666;
+        }
+        .logout a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: bold;
+        }
+        .logout a:hover {
+            color: #F7C679;
+        }
+
+        .user-info {  
+            position: fixed;
+            top: 14px;
+            right: 150px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: calc(100% - 100px);
+            z-index: 666;
+        }
+
+        .logo {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .logo img {
+            width: 200px;
+            height: 40px;
+        }
+
+        .home {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            z-index: 999;
+        }
+        .home a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: bold;
+        }
+        .home a:hover {
+            color: #F7C679;
+        }
+
+        .chatbot {
+            margin: auto;
+        }
+        .chatbot textarea {
+            width: 100%;
+            height: 200px;
+            left: 50%;
+            resize: none;
+            border-left: 2px solid #8B8B8B; /* Border on the left side only */
+            border-top: 2px solid #8B8B8B; /* Border on the top side */
+            border-bottom: 2px solid #8B8B8B; /* Border on the bottom side */
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 20px;
+            margin-bottom: 50px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        .chatbot button {
+            display: block;
+            margin: 0 auto; /* Center horizontally */
+            padding: 10px 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #808080;
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .chatbot button:hover {
+            background-color: #F7C679;
+        }
+
+        .sidebar {   /*siderbar background color*/
+            height: 100vh;
+            width: 250px;
+            background-color: #2C2C2C;
+            position: fixed;
+            top: 0px;
+            left: 0;
+            overflow-x: hidden;
+            padding-top: 0;
+            z-index: 999;
+        }
+        .sidebar a {  /*Category text */
+            padding: 15px 15px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+            font-weight: bold;
+            font-family: Tahoma;
+            font-size: 1.2em;
+        }
+        .sidebar ul {    /* removes the bullets */
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .sidebar .category > a {  /* Category text color*/
+            padding: 15px 15px 15px 30px;
+            color: #F7C679; 
+            position: relative;
+        }
+        .sidebar .category > a::before {
+            content: "\25B8"; /* Rightwards triangle */
+            position: absolute;
+            left: 10px;
+            font-size: 0.6em;
+            transition: transform 0.3s;
+            transform: rotate(0deg);
+        }
+        .sidebar .category.open > a::before {
+            transform: rotate(90deg);
+        }
+        .sidebar .subcategory {
+            display: none;
+        }
+        .sidebar .subcategory a {
+            padding-left: 30px;
+            font-size: 1em;
+        }
+        .sidebar .subcategory a:hover {
+            color: #F7C679;
+            background-color: #333;
+            transition: color 0.3s, background-color 0.3s;
+        }
+        .sidebar .hidden {
+            display: none;
+        }
+
+        .toggle_sidebar {
+            position: fixed;
+            top: 10px;
+            left: 260px;
+            padding: 10px;
+            background-color: #2C2C2C;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: left 0.3s ease;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            border-radius: 5px;
+            z-index: 999;
+        }
+        .toggle_sidebar.close {
+            left: 10px;
+        }
+        .toggle_sidebar.shifted {
+            left: 10px;
+        }
+        .toggle_sidebar span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: white;
+            border-radius: 1px; /* Make the lines slightly rounded */
+        }
+        
+        .hidden { display: none; }
+        .shifted { margin-left: 0px; }
+        .close { margin-left: 0px; }
+        .lefted {text-align: left;}
+        
+    </style>
+
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    {% block user_info %}
+    <div class="user-info">
+        <span>Welcome, <strong>{{ username }}</strong></span>
+    </div>
+    {% endblock %}
+
+    {% block logo %}
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+    {% endblock %}
+
+    {% block sidebar %}
+    <div class="sidebar" id="sidebar">
+        <ul>
+            {% for category, services in g.services_by_category.items() %}
+                <li class="category">
+                    <a href="#">{{ category }}</a>
+                    <ul class="subcategory">
+                        {% for service in services %}
+                            <li>
+                                <a href="#" onclick="window.location.href='http://192.168.8.12:5000/api/{{service.service_id}}'">{{ service.service_name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endblock %}
+
+    {% block toggle_sidebar %}
+    <button class="toggle_sidebar" id="toggle_sidebar">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    {% endblock %}
+
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}
+    <script>
+    document.querySelectorAll('.category > a').forEach(function(category) {
+        category.addEventListener('click', function() {
+            var subcategory = this.nextElementSibling;
+            var parentCategory = this.parentElement;
+            if (subcategory.style.display === 'none' || subcategory.style.display === '') {
+                subcategory.style.display = 'block';
+                parentCategory.classList.add('open');
+            } else {
+                subcategory.style.display = 'none';
+                parentCategory.classList.remove('open');
+            }
+        });
+    });
+
+    function fetchData(url) {
+            window.location.href = url;
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.getElementById("sidebar");
+        const toggleButton = document.querySelector(".toggle_sidebar");
+
+        // Initialize the sidebar as hidden
+        sidebar.classList.add("hidden");
+        toggleButton.classList.add("close");
+
+        toggleButton.addEventListener("click", function () {
+            if (sidebar.classList.contains('hidden')) {
+                sidebar.classList.remove("hidden");
+                toggleButton.classList.remove("close");
+            } else {
+                sidebar.classList.add('hidden');
+                toggleButton.classList.add('close');
+            }
+        });
+    });
+
+    </script>
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content" id="content">
+    <h1>User overview</h1>
+    
+    <div style="text-align: left; margin-bottom: 20px;">
+        <form action="../user_management/add_new_user" method="get">
+            <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 20px;">
+                + Add New User
+            </button>
+        </form>
+    </div>
+
+    <form style="width: 100%;">
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto;">
+            <table id="result-table" style="width: 100%; text-align: left; border-collapse: collapse;">
+                <tr>
+                    <th>User_id</th>
+                    <th>User name</th>
+                    <th>Current status</th>
+                    <th>Activate / Deactivate</th>
+                </tr>
+                {% for item in all_user %}
+                <tr>
+                    <td>{{ item['user_id'] }}</td>
+                    <td>{{ item['username'] }}</td>
+                    <td>
+                        <span class="circle {{ 'activate-circle' if item['activate'] == '1' else 'deactivate-circle' }}"></span>
+                        {{ "Activate" if item['activate'] == "1" else "Deactivate" }}
+                    </td>
+                    <td class="actions-column">
+                        <form action="../user_management/activate_user" method="post" style="display: inline;">
+                            <input type="hidden" name="user_result" value="{{ item['user_id'] }}">
+                            <button type="submit" class="activate-button">
+                                &#x2714; Activate
+                            </button>
+                        </form>
+                        <form action="../user_management/deactivate_user" method="post" style="display: inline;">
+                            <input type="hidden" name="user_result" value="{{ item['user_id'] }}">
+                            <button type="submit" class="deactivate-button">
+                                &#x2716; Deactivate 
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+
+    {% block extra_styles %}
+        <style>
+            button {
+                padding: 10px 20px;
+                background-color: #495057;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 1em;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #F7C679;
+                color: #333;
+            }
+
+            .content {
+                flex-grow: 1;
+                padding: 20px;
+                transition: margin-left 0.3s ease;
+                margin-left: 300px;
+            }
+            .content.shifted {
+                margin-left: 50px;
+            }
+            .content h1 {
+                font-size: 2em;
+                margin-top: 120px;
+                color: #333;
+            }
+            .content ul {
+                list-style-type: disc;
+                margin-top: 50px;
+                color: #555;
+            }
+            .content ul li {
+                margin-bottom: 10px;
+            }
+            .content p {
+                background-color: #f3f3f3;
+                padding: 30px;
+                width: calc(100% - 100px);
+                margin: auto;
+                margin-right: 50px;
+            }
+
+            #result-table td {
+                font-size: 1.1em;
+            }
+
+            #result-table td.username {
+                font-size: 1.1em;
+            }
+
+            #result-table td:nth-child(1),
+            #result-table td:nth-child(2),
+            #result-table td:nth-child(3) {
+                font-size: 1.1em;
+            }
+
+            table {
+                border-collapse: collapse;
+                margin: 100px auto;
+                width: 80%;
+                overflow-x: auto;
+            }
+            th, td {
+                padding: 8px 16px;
+                text-align: center;
+                position: relative;
+                border-right: 1px solid #a5a2a2d7;
+                line-height: 1.5;
+            }
+            th:last-child, td:last-child {
+                border-right: none; 
+            }
+            tr:nth-child(odd) {
+                background-color: #f2f2f2;
+            }
+            tr:nth-child(even) {
+                background-color: #dcdcdc;
+            }
+            tr:first-child th {
+                position: relative;
+                text-align: center;
+                background-color: black;
+                color: white;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+            table th:nth-child(1) {
+                width: 50px;
+            }
+            table th:nth-child(2) {
+                width: 250px;
+            }
+            th.edit-column, td.edit-column {
+                width: 50px;
+            }
+
+            .actions-column {
+                white-space: nowrap;
+            }
+
+            .actions-column form {
+                display: inline;
+            }
+        </style>
+    {% endblock %}
+    
+    {% block home %}
+        <div class="home">
+            <a href="http://192.168.8.12:5000/">Home</a>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+
+    document.querySelectorAll('.category > a').forEach(function(category) {
+        category.addEventListener('click', function() {
+            var subcategory = this.nextElementSibling;
+            var parentCategory = this.parentElement;
+            if (subcategory.style.display === 'none' || subcategory.style.display === '') {
+                subcategory.style.display = 'block';
+                parentCategory.classList.add('open');
+            } else {
+                subcategory.style.display = 'none';
+                parentCategory.classList.remove('open');
+            }
+        });
+    });
+
+    document.getElementById('toggle_sidebar').addEventListener('click', function() {
+        var sidebar = document.getElementById('sidebar');
+        var content = document.getElementById('content');
+        var button = document.getElementById('toggle_sidebar');
+        if (sidebar.classList.contains('hidden')) {
+            sidebar.classList.remove('hidden');
+            content.classList.remove('shifted');
+            button.classList.remove('shifted');
+        } else {
+            sidebar.classList.add('hidden');
+            content.classList.add('shifted');
+            button.classList.add('shifted');
+        }
+    });
+
+    function fetchData(url) {
+        window.location.href = url;
+    };
+</script>
+    
+</script>
+{% endblock %}

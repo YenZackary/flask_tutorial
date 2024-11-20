@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" style="padding-top: 80px;">
+        {% if result %}
+            <h2 class="mt-4" style="padding-left: 300px;">Review Data</h2>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in result %}
+                        <tr>
+                            <td>{{ row['ID'] }}</td>
+                            <td>{{ row['user_name_input'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No data available.</p>
+        {% endif %}
+    </div>
+
+    {% block home %}
+    <div class="home">
+        <a href="http://192.168.8.12:5000/">Home</a>
+    </div>
+    {% endblock %}
+
+    {% block extra_styles %}
+    <style>
+        table.custom-table {
+            border-collapse: collapse;
+            margin: 50px 300px ;
+            width: 80%;
+            overflow-x: auto;
+        }
+        th, td {
+            padding: 8px 16px;
+            text-align: left;
+            position: relative;
+            border-right: 1px solid #a5a2a2d7;
+            line-height: 1.5;
+        }
+        th:last-child, td:last-child {
+            border-right: none; 
+        }
+        tr:nth-child(odd) {  
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) { 
+            background-color: #dcdcdc;
+        }
+        tr:first-child th {  
+            position: relative;
+            text-align: center;
+            background-color: black;
+            color: white;
+        }
+    </style>
+    {% endblock %}
+{% endblock %}
+

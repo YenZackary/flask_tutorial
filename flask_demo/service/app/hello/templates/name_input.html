@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+    {% block content %}
+        <div class="container">
+            <div class="chatbot" id="chatbot">    
+                <!-- POST form to '/' route -->
+                <form action="{{ url_for('hello.save_result') }}" method="POST" style="display: block; margin: 0 auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <div id="outputText" class="pre-formatted" style="white-space: pre-wrap;"></div>
+                    <div class="input-group mb-3">
+                        <div class="center-wrapper">
+                            <textarea class="form-control" aria-label="With textarea" name="data" placeholder="Please enter your name" required></textarea>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button class="btn btn-dark" id="sendButton" type="submit">Okay</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% block home %}
+        <div class="home">
+            <a href="http://192.168.8.12:5000/">Home</a>
+        </div>
+        {% endblock %}
+
+    {% endblock %}
+</body>
+</html>

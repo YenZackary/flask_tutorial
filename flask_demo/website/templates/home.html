@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html>
+
+<body>
+    {% block content %}
+        <div class="content" id="content">
+            <h1>Welcome to the Home Page</h1>
+            <ul>
+                <li>If you want to access the service but do not have permission, please contact the IT department.</li>
+            </ul>
+        </div>
+
+
+        {% block extra_styles %}
+        <style>
+            .content {
+                margin: 200px 300px;
+            }
+        </style>
+        {% endblock %}
+
+        {% block logout %}
+        <div class="logout">
+            <a href="/logout">Logout</a>
+        </div>
+        {% endblock %}
+    {% endblock %}
+</body>
+</html>

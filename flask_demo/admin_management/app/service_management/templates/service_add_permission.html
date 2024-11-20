@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content" id="content">
+        <h1>Change permission's user</h1>
+        <h1></h1>
+        <h1></h1>
+        <p>The current service for modifying permissions is : {{ latest_service_name }}</p>
+
+        <form action="../service_management/update_permission_user/{{latest_service_id}}" method="post" style="width: 100%;">
+            <div style="width: 100%; max-width: 1200px; margin: 0 auto;">
+                <table id="result-table">
+                    <tr>
+                        <th>user_id</th>
+                        <th>username</th>
+                        <th>HasPermission</th>
+                    </tr>
+                    {% for item in all_user %}
+                    <tr>
+                        <td>{{ item['user_id'] }}</td>
+                        <td>{{ item['username'] }}</td>
+                        <td>
+                            <input type="checkbox" name="users" value = "{{ item['user_id'] }}">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="btn btn-secondary btn-lg" type="submit">Okay</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% block home %}
+                <div class="home" id="home">
+                    <a href="http://192.168.8.12:5000/">Home</a>
+                </div>
+    {% endblock %}
+
+    {% block extra_styles %}
+    <style>
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            margin-left: 300px;
+        }
+        .content.shifted {
+            margin-left: 50px;
+        }
+        .content h1 {
+            font-size: 2em;
+            margin-top: 120px;
+            color: #333;
+        }
+        .content ul {
+            list-style-type: disc;
+            margin-top: 50px;
+            color: #555;
+        }
+        .content ul li {
+            margin-bottom: 10px;
+        }
+        .content p {
+            background-color: #f3f3f3;
+            padding: 30px;
+            width: calc(100% - 100px);
+            margin: auto;
+            margin-right: 50px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        #result-table td {
+            font-size: 1.1em;
+        }
+
+        #result-table td.username {
+            font-size: 1.1em;
+        }
+
+        #result-table td:nth-child(1),
+        #result-table td:nth-child(2),
+        #result-table td:nth-child(3) {
+            font-size: 1.1em;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 100px auto;
+            width: 80%;
+            overflow-x: auto;
+        }
+        th, td {
+            padding: 8px 16px;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #a5a2a2d7;
+            line-height: 1.5;
+        }
+        th:last-child, td:last-child {
+            border-right: none; 
+        }
+        tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #dcdcdc;
+        }
+        tr:first-child th {
+            position: relative;
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        table th:nth-child(1) {
+            width: 50px;
+        }
+        table th:nth-child(2) {
+            width: 250px;
+        }
+        th.edit-column, td.edit-column {
+            width: 50px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #495057;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #F7C679;
+            color: #333;
+        }
+    </style>
+    {% endblock %}
+
+{% endblock %}
+
+    
+{% block scripts %}
+<script>
+
+    document.querySelectorAll('.category > a').forEach(function(category) {
+        category.addEventListener('click', function() {
+            var subcategory = this.nextElementSibling;
+            var parentCategory = this.parentElement;
+            if (subcategory.style.display === 'none' || subcategory.style.display === '') {
+                subcategory.style.display = 'block';
+                parentCategory.classList.add('open');
+            } else {
+                subcategory.style.display = 'none';
+                parentCategory.classList.remove('open');
+            }
+        });
+    });
+
+    document.getElementById('toggle_sidebar').addEventListener('click', function() {
+        var sidebar = document.getElementById('sidebar');
+        var content = document.getElementById('content');
+        var button = document.getElementById('toggle_sidebar');
+        if (sidebar.classList.contains('hidden')) {
+            sidebar.classList.remove('hidden');
+            content.classList.remove('shifted');
+            button.classList.remove('shifted');
+        } else {
+            sidebar.classList.add('hidden');
+            content.classList.add('shifted');
+            button.classList.add('shifted');
+        }
+    });
+    function fetchData(url) {
+        window.location.href = url;
+    };
+    function confirmDeletion() {
+        return confirm("Please double-check if you are deleting the correct service. If you want to add it back later, the order in the sidebar will change. Please confirm again. If everything looks good, click Ok!");
+    }    
+</script>
+{% endblock %}

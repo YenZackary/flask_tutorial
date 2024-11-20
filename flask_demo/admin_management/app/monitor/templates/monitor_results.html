@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="content" id="content" style="margin-top: 50px;">
+        <div class="cards-container">
+            <div class="card">
+                <h2>Today</h2>
+                <div class="number" id="today-date"></div>
+            </div>
+            <div class="card">
+                <h2>Total Access Times</h2>
+                <div class="number">{{ total_access_today }}</div>
+            </div>
+            <div class="card">
+                <h2>The Service is Being Used</h2>
+                <div class="number">{{ total_service_user_today }}</div>
+            </div> 
+            <div class="card">
+                <h2>Total User</h2>
+                <div class="number">{{ total_user_today }}</div>
+            </div> 
+        </div>    
+
+        <div class="charts"  style="margin-bottom: 50px;">
+            <div class="chart-container">
+                <h2>Service Access Times for Today</h2>
+                <img src="{{ service_plot_url }}" alt="Service Access Times for Today">
+            </div>
+
+            <div class="chart-container">
+                <h2>User Access Times for Today</h2>
+                <img src="{{ user_plot_url }}" alt="Access Times for Each User Today">
+            </div>
+        </div>
+    </div>
+
+    {% block extra_styles %}
+    <style>
+        .content {
+            margin: 100px auto;
+            padding: 20px;
+            max-width: calc(100% - 600px);
+            min-height: calc(100vh - 200px);
+            border-radius: 10px;
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            color: black;
+            margin: 0;
+            text-align: center;
+        }
+
+        .card .number {
+            font-size: 40px;
+            color: black;
+            margin: 10px 0 0;
+            text-align: center;
+        }
+
+        .charts {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 20px; /* Add margin to space out from edges */
+        }
+
+        .chart-container {
+            flex: 1;
+            min-width: 0; /* Prevents containers from shrinking too much */
+            background: #1e1e1e; /* Dark background for containers */
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.5); /* Darker shadow for depth */
+            overflow: hidden;
+            text-align: center; /* Center-align text */
+        }
+
+        .chart-container h2 {
+            margin: 0;
+            padding: 15px;
+            font-size: 22px;
+            color: #f0f0f0;
+            background: #333;
+            text-align: center;
+        }
+
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+    {% endblock %}
+
+    {% block home %}
+        <div class="home">
+            <a href="http://192.168.8.12:5000/">Home</a>
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+    document.querySelectorAll('.category > a').forEach(function(category) {
+        category.addEventListener('click', function() {
+            var subcategory = this.nextElementSibling;
+            var parentCategory = this.parentElement;
+            if (subcategory.style.display === 'none' || subcategory.style.display === '') {
+                subcategory.style.display = 'block';
+                parentCategory.classList.add('open');
+            } else {
+                subcategory.style.display = 'none';
+                parentCategory.classList.remove('open');
+            }
+        });
+    });
+
+    document.getElementById('toggle_sidebar').addEventListener('click', function() {
+        var sidebar = document.getElementById('sidebar');
+        var content = document.getElementById('content');
+        var button = document.getElementById('toggle_sidebar');
+        if (sidebar.classList.contains('hidden')) {
+            sidebar.classList.remove('hidden');
+            content.classList.remove('shifted');
+            button.classList.remove('shifted');
+        } else {
+            sidebar.classList.add('hidden');
+            content.classList.add('shifted');
+            button.classList.add('shifted');
+        }
+    });
+
+    function fetchData(url) {
+        window.location.href = url;
+    };
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}.${month}.${day}`;
+    }
+
+    // Set today's date
+    document.getElementById('today-date').textContent = formatDate(new Date());
+</script>
+{% endblock %}
