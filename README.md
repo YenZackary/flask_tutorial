@@ -20,7 +20,7 @@ This repository includes two options for setting up your database:
 ## 🖥️ Flask Code
 You can check the folder "flask_demo," where all our three necessary folders and related code in this tutorial are located. Follow the tutorial series and implement these codes to learn and practice Flask development. Have fun exploring and building your Flask web application!
 
-### Three Folders
+### Three Folders in flask_demo
 - **website**: part 2
 - **service**: part 3
 - **admin_management**: part 5  
