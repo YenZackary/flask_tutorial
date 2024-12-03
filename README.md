@@ -41,4 +41,5 @@ create_engine("mssql+pyodbc://your_db_user_name:your_db_password@your_IP/demo?dr
 - Replace `your_IP` with the IP address of your database server.
 
 2. Update all HTML files:
+
 Search for all instances of `192.168.8.12` in your HTML files and replace them with your own IP address to ensure everything works correctly.
