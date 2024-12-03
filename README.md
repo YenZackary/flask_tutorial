@@ -26,8 +26,11 @@ You can check the folder "flask_demo," where all our three necessary folders and
 - **admin_management**: part 5  
 (Permission in part 4 is directly added to the file)
 
-### Important Setup Reminder
-As mentioned in our Part 1 tutorial, you need to change all instances of the following code:
+### 🚨 Important Setup Reminder  
+
+To ensure proper functionality, follow these steps to update your configuration:  
+
+1. Locate and update the following code snippet:  
 
 <pre>
 create_engine("mssql+pyodbc://your_db_user_name:your_db_password@your_IP/demo?driver=ODBC+Driver+17+for+SQL+Server", pool_pre_ping=True)
@@ -36,3 +39,6 @@ create_engine("mssql+pyodbc://your_db_user_name:your_db_password@your_IP/demo?dr
 - Replace `your_db_user_name` with your database username.
 - Replace `your_db_password` with your database password.
 - Replace `your_IP` with the IP address of your database server.
+
+2. Update all HTML files:
+Search for all instances of `192.168.8.12` in your HTML files and replace them with your own IP address to ensure everything works correctly.
